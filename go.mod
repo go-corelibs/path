@@ -1,4 +1,4 @@
-module github.com/go-curses/corelibs/path
+module github.com/go-corelibs/path
 
 go 1.21.0
 
