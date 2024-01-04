@@ -19,6 +19,34 @@ import (
 	"os"
 )
 
+func listMatchingEntry(path string, includeHidden, recurse bool, matcher func(dir bool, path string) (matched bool), info os.DirEntry, list *CListPath) (err error) {
+	dir := info.IsDir()
+	cleaned := Clean(Join(path, info.Name()))
+	if IsHidden(info.Name()) {
+		if includeHidden && matcher(dir, cleaned) {
+			if dir {
+				list.AddHiddenDir(cleaned)
+			} else {
+				list.AddHiddenFile(cleaned)
+			}
+		}
+	} else if matcher(dir, cleaned) {
+		if dir {
+			list.AddNormalDir(cleaned)
+		} else {
+			list.AddNormalFile(cleaned)
+		}
+	}
+	if dir && recurse {
+		var other *CListPath
+		if other, err = ListMatching(cleaned, includeHidden, recurse, matcher); err != nil {
+			return
+		}
+		list.AddListPath(cleaned, other)
+	}
+	return
+}
+
 // ListMatching is a general purpose filesystem listing function, used by all
 // other List functions in this package. It accepts a custom matcher func used
 // to determine whether to include the specific path or not and it returns a
@@ -48,30 +76,7 @@ func ListMatching(path string, includeHidden, recurse bool, matcher func(dir boo
 	var entries []os.DirEntry
 	if entries, err = os.ReadDir(path); err == nil {
 		for _, info := range entries {
-			dir := info.IsDir()
-			cleaned := Clean(Join(path, info.Name()))
-			if IsHidden(info.Name()) {
-				if includeHidden && matcher(dir, cleaned) {
-					if dir {
-						list.AddHiddenDir(cleaned)
-					} else {
-						list.AddHiddenFile(cleaned)
-					}
-				}
-			} else if matcher(dir, cleaned) {
-				if dir {
-					list.AddNormalDir(cleaned)
-				} else {
-					list.AddNormalFile(cleaned)
-				}
-			}
-			if dir && recurse {
-				var other *CListPath
-				if other, err = ListMatching(cleaned, includeHidden, recurse, matcher); err != nil {
-					return
-				}
-				list.AddListPath(cleaned, other)
-			}
+			err = listMatchingEntry(path, includeHidden, recurse, matcher, info, list)
 		}
 	}
 	return
