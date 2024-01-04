@@ -76,7 +76,9 @@ func ListMatching(path string, includeHidden, recurse bool, matcher func(dir boo
 	var entries []os.DirEntry
 	if entries, err = os.ReadDir(path); err == nil {
 		for _, info := range entries {
-			err = listMatchingEntry(path, includeHidden, recurse, matcher, info, list)
+			if err = listMatchingEntry(path, includeHidden, recurse, matcher, info, list); err != nil {
+				return
+			}
 		}
 	}
 	return
