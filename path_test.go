@@ -90,6 +90,7 @@ func TestPath(t *testing.T) {
 
 		// overwrite the temp file, check for correct mode and contents
 		err = Overwrite(path, "success\n")
+		So(err, ShouldEqual, nil)
 		perms, err = Permissions(path)
 		So(err, ShouldEqual, nil)
 		So(perms.Perm(), ShouldEqual, stat.Mode().Perm())
@@ -138,8 +139,10 @@ func TestPath(t *testing.T) {
 		So(err, ShouldEqual, nil)
 		defer cleanup(b1)
 		data, err = os.ReadFile(path)
+		So(err, ShouldEqual, nil)
 		So(string(data), ShouldEqual, "updated!\n")
 		data, err = os.ReadFile(b1)
+		So(err, ShouldEqual, nil)
 		So(string(data), ShouldEqual, "modified\n")
 	})
 
