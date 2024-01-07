@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/go-corelibs/path/graph/badge.svg?token=8rdS5q12xT)](https://codecov.io/gh/go-corelibs/path)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-corelibs/path)](https://goreportcard.com/report/github.com/go-corelibs/path)
 
-# go-corelibs/path - utilities and convenience wrappers for all sorts of unix and URL path operations
+# path - utilities and convenience wrappers for all sorts of unix and URL path operations
 
 The heading says it all. This package is likely a great candidate for
 a general refactoring into more targeted Go packages, however, it has
