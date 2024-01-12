@@ -79,6 +79,12 @@ func TestHasIs(t *testing.T) {
 		So(IsDir("./has-is_test.go"), ShouldEqual, false)
 	})
 
+	Convey("FileSize", t, func() {
+		So(FileSize("."), ShouldEqual, 0)
+		So(FileSize("/dev/null"), ShouldEqual, 0)
+		So(FileSize("has-is_test.go"), ShouldNotEqual, 0)
+	})
+
 	Convey("HasExt", t, func() {
 		So(HasExt("file.txt", ""), ShouldEqual, false)
 		So(HasExt("file.txt", ".txt"), ShouldEqual, true)

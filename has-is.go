@@ -120,6 +120,14 @@ func IsDir(path string) bool {
 	return false
 }
 
+// FileSize returns the size of regular files
+func FileSize(path string) (size int64) {
+	if info, ee := os.Stat(path); ee == nil && info.IsDir() == false && info.Mode().IsRegular() {
+		size = info.Size()
+	}
+	return
+}
+
 // HasExt returns true if either the primary or secondary file extension
 // matches the one given
 func HasExt(path, extension string) (present bool) {
