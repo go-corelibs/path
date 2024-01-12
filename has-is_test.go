@@ -19,6 +19,8 @@ import (
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
+
+	"github.com/go-corelibs/chdirs"
 )
 
 func TestHasIs(t *testing.T) {
@@ -32,9 +34,14 @@ func TestHasIs(t *testing.T) {
 		So(IsBackup("/path/nope"), ShouldEqual, false)
 	})
 
-	Convey("IsHiddenPath", t, func() {
+	Convey("IsHiddenPath", t, func(c C) {
 		So(IsHiddenPath("/path/.hidden/file"), ShouldEqual, true)
 		So(IsHiddenPath("/path/not-hid/file"), ShouldEqual, false)
+		So(func() {
+			c.So(chdirs.MockBadWD(), ShouldEqual, nil)
+			defer chdirs.UnMockBadWD()
+			IsHiddenPath(".././..")
+		}, ShouldPanic)
 	})
 
 	Convey("IsPlainText", t, func() {

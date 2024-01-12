@@ -36,11 +36,15 @@ func IsBackup(path string) bool {
 }
 
 // IsHiddenPath returns true if any of the path segments starts with a period
+// and will panic if filepath.Abs fails to resolve an absolute path, which is
+// not something that just happens randomly. Likely culprits of a panic are
+// situations where the current working directory doesn't exist anymore or some
+// other calamity of that nature
 func IsHiddenPath(path string) (hidden bool) {
 	var err error
 	var absPath string
-	if absPath, err = Abs(path); err != nil {
-		panic(err) // untestable
+	if absPath, err = filepath.Abs(path); err != nil {
+		panic(err)
 	}
 	for _, part := range strings.Split(absPath, "/") {
 		if len(part) >= 2 && part != ".." {
