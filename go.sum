@@ -4,8 +4,8 @@ github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uq
 github.com/gabriel-vasile/mimetype v1.4.3/go.mod h1:d8uq/6HKRL6CGdk+aubisF/M5GcPfT7nKyLpA0lbSSk=
 github.com/go-corelibs/chdirs v1.1.1 h1:N9rzIR+czy21jgp2qrSrXePbJfMrnrgMf3fnzXBW1YU=
 github.com/go-corelibs/chdirs v1.1.1/go.mod h1:LTJzxNUeHLUvJ2KSU+D+cNGTX0ZnIUytg1Ui/H3kRo0=
-github.com/go-corelibs/maps v1.0.2 h1:ky6gHD7G1XODl8g6KAqT8JJy7SOK5oUoTm5PYJgJftg=
-github.com/go-corelibs/maps v1.0.2/go.mod h1:AdGyPQOLVgiaRyCJFcFUjcdXQEmKciMKA8RWAHzdUCk=
+github.com/go-corelibs/maps v1.1.0 h1:LM07Xl18PLSwTyDsFjRVgQlANdhMcIBEP7l4772Mbkc=
+github.com/go-corelibs/maps v1.1.0/go.mod h1:AdGyPQOLVgiaRyCJFcFUjcdXQEmKciMKA8RWAHzdUCk=
 github.com/go-corelibs/maths v1.0.1 h1:gwBRTJSfEnwXEttf3fCqyL2l7x6HML5Y07cO6WleDqo=
 github.com/go-corelibs/maths v1.0.1/go.mod h1:AGg83e+nOjEqCvfrwDMGTu/DvSrs0bWLZ1IZc/fN5RM=
 github.com/gopherjs/gopherjs v1.17.2 h1:fQnZVsXk8uxXIStYb0N4bGk7jeyTalG/wsZjQ25dO0g=

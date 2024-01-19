@@ -6,7 +6,7 @@ require (
 	github.com/djherbis/times v1.6.0
 	github.com/gabriel-vasile/mimetype v1.4.3
 	github.com/go-corelibs/chdirs v1.1.1
-	github.com/go-corelibs/maps v1.0.2
+	github.com/go-corelibs/maps v1.1.0
 	github.com/maruel/natural v1.1.1
 	github.com/smartystreets/goconvey v1.8.1
 )
