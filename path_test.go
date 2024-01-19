@@ -99,13 +99,13 @@ func TestPath(t *testing.T) {
 		So(string(data), ShouldEqual, "success\n")
 
 		// remove the file and overwrite again, this time the mode
-		// should be the DefaultFileMode
+		// should be the DefaultFilePerms
 		_ = os.Remove(path)
 		err = Overwrite(path, "moar success!\n")
 		So(err, ShouldEqual, nil)
 		perms, err = Permissions(path)
 		So(err, ShouldEqual, nil)
-		So(perms.Perm(), ShouldEqual, DefaultFileMode.Perm())
+		So(perms.Perm(), ShouldEqual, DefaultFilePerms.Perm())
 		data, err = os.ReadFile(path)
 		So(err, ShouldEqual, nil)
 		So(string(data), ShouldEqual, "moar success!\n")

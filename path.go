@@ -22,8 +22,12 @@ import (
 )
 
 var (
-	DefaultDirMode  = os.FileMode(0770)
-	DefaultFileMode = os.FileMode(0660)
+	// DefaultPathPerms are the default permissions used when creating
+	// new directories
+	DefaultPathPerms = os.FileMode(0770)
+	// DefaultFilePerms are the default permissions used when creating
+	// new files
+	DefaultFilePerms = os.FileMode(0660)
 )
 
 // Permissions is a wrapper around os.Stat, returning just the
@@ -41,7 +45,7 @@ func Permissions(path string) (perms fs.FileMode, err error) {
 func Overwrite(path, content string) (err error) {
 	var perms os.FileMode
 	if perm, ee := Permissions(path); ee != nil {
-		perms = DefaultFileMode
+		perms = DefaultFilePerms
 	} else {
 		perms = perm
 	}
