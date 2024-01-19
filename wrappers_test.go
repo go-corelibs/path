@@ -50,4 +50,11 @@ func TestWrappers(t *testing.T) {
 		path = Which("go")
 		So(path, ShouldNotEqual, "")
 	})
+
+	Convey("Pwd", t, func() {
+		cwd, err := os.Getwd()
+		So(err, ShouldBeNil)
+		So(cwd, ShouldNotEqual, "")
+		So(Pwd(), ShouldEqual, cwd)
+	})
 }

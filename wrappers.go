@@ -76,3 +76,9 @@ func Which(name string) (path string) {
 	}
 	return
 }
+
+// Pwd is a wrapper around os.Getwd
+func Pwd() (pwd string) {
+	pwd, _ = os.Getwd()
+	return
+}
