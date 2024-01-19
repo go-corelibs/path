@@ -71,6 +71,17 @@ func TestPath(t *testing.T) {
 		So(perms, ShouldEqual, 0)
 	})
 
+	Convey("HasPermission", t, func() {
+		tempDir, err := os.MkdirTemp("", "corelibs-path.*.d")
+		So(err, ShouldBeNil)
+		defer os.RemoveAll(tempDir)
+		err = os.WriteFile(tempDir+"/file.txt", []byte("nope"), 0600)
+		So(err, ShouldBeNil)
+		So(HasPermission(tempDir+"/file.txt", 0400), ShouldBeTrue)
+		So(HasPermission(tempDir+"/file.txt", 0040), ShouldBeFalse)
+		So(HasPermission(tempDir+"/file.txt", 0004), ShouldBeFalse)
+	})
+
 	Convey("Overwrite, OverwriteWithPerms", t, func() {
 		var data []byte
 		var stat os.FileInfo

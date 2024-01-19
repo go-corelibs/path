@@ -40,6 +40,13 @@ func Permissions(path string) (perms fs.FileMode, err error) {
 	return
 }
 
+func HasPermission(path string, expected os.FileMode) (present bool) {
+	if perms, err := Permissions(path); err == nil {
+		present = perms&expected != 0
+	}
+	return
+}
+
 // Overwrite overwrites the given file, preserving existing
 // permissions
 func Overwrite(path, content string) (err error) {
