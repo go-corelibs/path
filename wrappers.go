@@ -100,3 +100,21 @@ func MkdirAll(path string) (err error) {
 	err = os.MkdirAll(path, DefaultPathPerms)
 	return
 }
+
+// ChmodAll uses Walk to traverse the filesystem and change all regular file
+// permissions to the DefaultFilePerms (0660) and all directory
+// permissions to the DefaultPathPerms (0770).
+//
+// Stops on the first error
+func ChmodAll(src string) error {
+	return filepath.WalkDir(src, func(path string, entry fs.DirEntry, err error) error {
+		if err == nil {
+			if entry.IsDir() {
+				err = os.Chmod(path, DefaultPathPerms)
+			} else if info, ee := entry.Info(); ee == nil && info.Mode().IsRegular() {
+				err = os.Chmod(path, DefaultFilePerms)
+			}
+		}
+		return err
+	})
+}

@@ -80,4 +80,23 @@ func TestWrappers(t *testing.T) {
 
 		So(os.RemoveAll(tempDir), ShouldEqual, nil)
 	})
+
+	Convey("ChmodAll", t, func() {
+		tempDir, err := os.MkdirTemp("", "corelibs-path.*.d")
+		So(err, ShouldBeNil)
+		So(tempDir, ShouldNotEqual, "")
+
+		So(os.WriteFile(tempDir+"/file.txt", []byte("nope"), 0440), ShouldBeNil)
+		So(IsPermission(tempDir+"/file.txt", 0440), ShouldBeTrue)
+
+		So(os.MkdirAll(tempDir+"/one/two", 0750), ShouldBeNil)
+		So(IsPermission(tempDir+"/one/two", 0750), ShouldBeTrue)
+
+		So(ChmodAll(tempDir), ShouldBeNil)
+		So(IsPermission(tempDir+"/file.txt", DefaultFilePerms), ShouldBeTrue)
+		So(IsPermission(tempDir+"/one", DefaultPathPerms), ShouldBeTrue)
+		So(IsPermission(tempDir+"/one/two", DefaultPathPerms), ShouldBeTrue)
+
+		So(os.RemoveAll(tempDir), ShouldEqual, nil)
+	})
 }
