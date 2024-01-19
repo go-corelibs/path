@@ -57,4 +57,27 @@ func TestWrappers(t *testing.T) {
 		So(cwd, ShouldNotEqual, "")
 		So(Pwd(), ShouldEqual, cwd)
 	})
+
+	Convey("MkdirAll", t, func() {
+		tempDir, err := os.MkdirTemp("", "corelibs-path.*.d")
+		So(err, ShouldBeNil)
+		So(tempDir, ShouldNotEqual, "")
+
+		Convey("path is an existing file", func() {
+			So(os.WriteFile(tempDir+"/file.txt", []byte("nope"), DefaultFilePerms), ShouldBeNil)
+			So(MkdirAll(tempDir+"/file.txt"), ShouldEqual, ErrExistingFile)
+		})
+
+		Convey("path is an existing directory", func() {
+			So(MkdirAll(tempDir), ShouldBeNil)
+		})
+
+		Convey("make all dirs", func() {
+			So(MkdirAll(tempDir+"/one/two"), ShouldBeNil)
+			So(IsDir(tempDir+"/one"), ShouldBeTrue)
+			So(IsDir(tempDir+"/one/two"), ShouldBeTrue)
+		})
+
+		So(os.RemoveAll(tempDir), ShouldEqual, nil)
+	})
 }

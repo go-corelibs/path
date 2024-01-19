@@ -15,12 +15,17 @@
 package path
 
 import (
+	"errors"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 
 	"github.com/djherbis/times"
+)
+
+var (
+	ErrExistingFile = errors.New("path is an existing file")
 )
 
 // Abs is a convenience wrapper around filepath.Abs
@@ -80,5 +85,18 @@ func Which(name string) (path string) {
 // Pwd is a wrapper around os.Getwd
 func Pwd() (pwd string) {
 	pwd, _ = os.Getwd()
+	return
+}
+
+// MkdirAll is a wrapper around os.MkdirAll with DefaultPathPerms (0770)
+func MkdirAll(path string) (err error) {
+	if IsFile(path) {
+		err = ErrExistingFile
+		return
+	} else if IsDir(path) {
+		// nop
+		return
+	}
+	err = os.MkdirAll(path, DefaultPathPerms)
 	return
 }
