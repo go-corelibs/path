@@ -111,9 +111,10 @@ func MoveFile(src, dst string) (err error) {
 	} else if err = os.Rename(src, dst); err == nil {
 		// rename worked, no need to copy+remove
 	} else if _, err = CopyFile(src, dst); err == nil {
-		// TODO: figure out how to test CopyFile actually working when
-		//       os.Rename fails!
-		// copy worked, remove file
+		// TODO: figure out how to test the CopyFile step within MoveFile, os.Rename must fail yet the file must still
+		//       be copyable to the destination, likely a cross-filesystem test case (can only rename within the same
+		//       filesystem)
+		// copy worked, safe to remove file
 		err = os.Remove(src)
 	}
 	return
