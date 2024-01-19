@@ -140,6 +140,7 @@ func PruneEmptyDirs(path string) (err error) {
 	return
 }
 
+// CopyFile copies the regular file `src` to `dst`
 func CopyFile(src, dst string) (copied int64, err error) {
 	// see: https://opensource.com/article/18/6/copying-files-go
 	var stat os.FileInfo
