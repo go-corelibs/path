@@ -65,8 +65,14 @@ func Stat(path string) (spec times.Timespec, err error) {
 	return
 }
 
-// Which is a convenience wrapper around exec.LookPath
+// Which is a convenience wrapper around exec.LookPath and filepath.Abs
 func Which(name string) (path string) {
-	path, _ = exec.LookPath(name)
+	var err error
+	var p, abs string
+	if p, err = exec.LookPath(name); err == nil {
+		if abs, err = filepath.Abs(p); err == nil {
+			path = abs
+		}
+	}
 	return
 }
