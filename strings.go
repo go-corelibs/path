@@ -174,10 +174,16 @@ func TrimDotSlash(path string) (out string) {
 	return
 }
 
-// TopDirectory returns the top directory in the path given
+// TopDirectory returns the top directory in the path given or an empty string
+// if there are no parent directories present
 func TopDirectory(path string) (name string) {
-	name = TrimSlashes(path)
-	name, _, _ = strings.Cut(name, "/")
+	if before, after, found := strings.Cut(path, "/"); found {
+		if before == "" {
+			name, _, _ = strings.Cut(after, "/")
+		} else {
+			name = before
+		}
+	}
 	return
 }
 

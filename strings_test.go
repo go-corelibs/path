@@ -76,6 +76,7 @@ func TestStrings(t *testing.T) {
 		So(TopDirectory("/one/two"), ShouldEqual, "one")
 		So(TopDirectory("one/two"), ShouldEqual, "one")
 		So(TopDirectory("/one"), ShouldEqual, "one")
+		So(TopDirectory("one"), ShouldEqual, "")
 	})
 
 	Convey("MatchExact", t, func() {
