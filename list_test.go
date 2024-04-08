@@ -37,7 +37,7 @@ func TestList(t *testing.T) {
 	Convey("ListDirs", t, func() {
 		dirs, err := ListDirs(".", false)
 		So(err, ShouldEqual, nil)
-		So(dirs, ShouldBeEmpty)
+		So(len(dirs), ShouldEqual, 1)
 		dirs, err = ListDirs("nope", false)
 		So(err, ShouldNotEqual, nil)
 		So(dirs, ShouldBeEmpty)
