@@ -16,6 +16,7 @@ package path
 
 import (
 	"errors"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -124,6 +125,23 @@ func IsDir(path string) bool {
 func FileSize(path string) (size int64) {
 	if info, ee := os.Stat(path); ee == nil && info.IsDir() == false && info.Mode().IsRegular() {
 		size = info.Size()
+	}
+	return
+}
+
+// DirSize uses filepath.WalkDir to traverse the given directory recursively
+// and add up the size of each file present (includes hidden and any
+// non-directory entries)
+func DirSize(path string) (size uint64) {
+	if IsDir(path) {
+		_ = filepath.WalkDir(path, func(path string, d fs.DirEntry, _ error) error {
+			if !d.IsDir() {
+				if info, err := d.Info(); err == nil {
+					size += uint64(info.Size())
+				}
+			}
+			return nil
+		})
 	}
 	return
 }
