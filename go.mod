@@ -1,6 +1,6 @@
 module github.com/go-corelibs/path
 
-go 1.21.0
+go 1.22.4
 
 require (
 	github.com/djherbis/times v1.6.0
